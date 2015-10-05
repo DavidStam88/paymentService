@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.han.nl/schemas/types"
+        xmlns:tns="http://www.han.nl/schemas/types"
+        elementFormDefault="qualified">
+
+    <complexType name="PaymentResult">
+        <all>
+            <element name="value" type="int"/>
+            <element name="message" type="string"/>
+        </all>
+    </complexType>
+
+    <complexType name="PaymentInput">
+        <all>
+			<element name="paramlist" type="tns:PaymentParameters" minOccurs="1" maxOccurs="1"/>
+			<element name="operation" type="tns:PaymentOperation" minOccurs="1" maxOccurs="1"/>
+        </all>
+    </complexType>
+
+	<complexType name="PaymentParameters">
+		<sequence>
+			<element name="param" type="int" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+    <simpleType name="PaymentOperation">
+        <restriction base="NCName">
+            <enumeration value="makePayment"/>
+        </restriction>
+    </simpleType>
+</schema>
