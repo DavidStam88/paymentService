@@ -1,0 +1,42 @@
+package nl.ead.webservice.business.taskServices;
+
+import nl.ead.webservice.application.PayPalPaymentDao;
+import nl.ead.webservice.application.IPayPalPaymentDao;
+import nl.ead.webservice.application.PayPalService;
+import nl.ead.webservice.business.entityServices.PayPalPayment;
+import org.springframework.beans.factory.annotation.Autowired;
+
+// PayPal libraries
+import com.paypal.api.payments.*;
+
+public class PaymentProcessor implements IPaymentProcessor {
+  private final IPayPalPaymentDao paypalPaymentDao;
+  private final PayPalService paypalService;
+
+  @Autowired
+  public PaymentProcessor(IPayPalPaymentDao paypalPaymentDao) {
+    this.paypalPaymentDao = paypalPaymentDao;
+    this.paypalService = new PayPalService();
+  }
+
+  public String sendPayment(int userId, int amount) {
+    Payment payment = this.paypalService.getPayPalPayment(amount);
+    PayPalPayment ppp = new PayPalPayment();
+    ppp.setUserId(userId);
+    ppp.setAmount(amount);
+    ppp.setPaymentConfirmed(false);
+    ppp.setPaypalId(payment.getId());
+    this.paypalPaymentDao.save(ppp);
+
+    return payment.getLinks().get(1).getHref();
+  }
+
+  public PayPalPayment confirmPayment(String paymentId) {
+    PayPalPayment ppp = this.paypalPaymentDao.update(paymentId);
+    return ppp;
+  }
+
+  public void cancelPayment(String paymentId) {
+    this.paypalPaymentDao.remove(paymentId);
+  }
+}
