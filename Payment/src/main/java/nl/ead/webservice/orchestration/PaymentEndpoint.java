@@ -13,10 +13,14 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+/**
+ * @author David Stam & Maikel Hennekes
+ */
+
 @Endpoint
 public class PaymentEndpoint {
     private final IPaymentProcessor paymentProcessor;
-
+    
     @Autowired
     public PaymentEndpoint(IPaymentProcessor paymentProcessor) {
         this.paymentProcessor = paymentProcessor;

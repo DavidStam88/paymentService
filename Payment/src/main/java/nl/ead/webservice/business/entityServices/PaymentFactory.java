@@ -1,4 +1,9 @@
 package nl.ead.webservice.business.entityServices;
+
+/**
+ * @author David Stam & Maikel Hennekes
+ */
+
 public class PaymentFactory implements IPaymentFactory {
 
     private PaymentFactory(){

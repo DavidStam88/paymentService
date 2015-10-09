@@ -6,6 +6,10 @@ import java.util.*;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.*;
 
+/**
+ * @author David Stam & Maikel Hennekes
+ */
+
 public class PayPalService {
   private final String client_secret = "";
   private final String client_id = "";

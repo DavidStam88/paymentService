@@ -5,6 +5,10 @@ import nl.ead.webservice.business.entityServices.PayPalPayment;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author David Stam & Maikel Hennekes
+ */
+
 @Repository
 public class PayPalPaymentDao implements IPayPalPaymentDao {
 
