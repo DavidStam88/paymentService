@@ -19,7 +19,7 @@ public class PayPalService {
     private String getAccessToken() {
       // Instantiate PayPal credentials
       //Map<String, String> sdkConfig = new HashMap<String, String>();
-      this.sdkConfig.put("mode", "sandbox");
+      //this.sdkConfig.put("mode", "sandbox");
 
       // Get access_token from PayPal
       String accessToken = null;
@@ -28,7 +28,7 @@ public class PayPalService {
         accessToken = new OAuthTokenCredential(
           this.client_id,
           this.client_secret,
-          sdkConfig
+          this.sdkConfig
         ).getAccessToken();
       } catch (PayPalRESTException e) {
         System.out.println(e.getLocalizedMessage());
@@ -37,37 +37,51 @@ public class PayPalService {
       return accessToken;
     }
 
+    public PayPalPayment getPayPalPayment(String paypalPaymentId) {
+      PayPalPayment ppp = new PayPalPayment();
+
+      return ppp;
+    }
+
     public Payment getPayPalPayment(int totalAmount) {
       // Instantiate PayPal credentials
       this.sdkConfig.put("mode", "sandbox");
 
       String accessToken = this.getAccessToken();
       // Make payment request to PayPal with given credentials
-      APIContext apiContext = new APIContext(accessToken);
-      apiContext.setConfigurationMap(sdkConfig);
+      APIContext apiContext = this.setAPIContext(accessToken);
+      //APIContext apiContext = new APIContext(accessToken);
+      //apiContext.setConfigurationMap(this.sdkConfig);
 
-      Amount amount = new Amount();
-      amount.setCurrency("USD");
-      amount.setTotal(totalAmount + "");
+      Amount amount = this.setAmount(totalAmount);
+      //Amount amount = new Amount();
+      //amount.setCurrency("USD");
+      //amount.setTotal(totalAmount + "");
 
-      Transaction transaction = new Transaction();
-      transaction.setDescription("creating a payment");
-      transaction.setAmount(amount);
+      List<Transaction> transactions = this.setTransactionsList(amount);
+      //Transaction transaction = new Transaction();
+      //transaction.setDescription("creating a payment");
+      //transaction.setAmount(amount);
 
-      List<Transaction> transactions = new ArrayList<Transaction>();
-      transactions.add(transaction);
+      //List<Transaction> transactions = new ArrayList<Transaction>();
+      //transactions.add(transaction);
 
-      Payer payer = new Payer();
-      payer.setPaymentMethod("paypal");
+      Payer payer = this.setPayer();
+      //Payer payer = new Payer();
+      //payer.setPaymentMethod("paypal");
 
-      Payment payment = new Payment();
-      payment.setIntent("sale");
-      payment.setPayer(payer);
-      payment.setTransactions(transactions);
-      RedirectUrls redirectUrls = new RedirectUrls();
-      redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal/java?cancel=true");
-      redirectUrls.setReturnUrl("https://devtools-paypal.com/guide/pay_paypal/java?success=true");
-      payment.setRedirectUrls(redirectUrls);
+      RedirectUrls redirectUrls = this.setRedirectUrls();
+      //RedirectUrls redirectUrls = new RedirectUrls();
+      //redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal/java?cancel=true");
+      //redirectUrls.setReturnUrl("https://devtools-paypal.com/guide/pay_paypal/java?success=true");
+
+      Payment payment = this.setPayment(payer, transactions, redirectUrls);
+
+      //Payment payment = new Payment();
+      //payment.setIntent("sale");
+      //payment.setPayer(payer);
+      //payment.setTransactions(transactions);
+      //payment.setRedirectUrls(redirectUrls);
 
       Payment createdPayment = null;
 
@@ -88,27 +102,11 @@ public class PayPalService {
       return createdPayment;
     }
 
-    private RedirectUrls setRedirectURLs() {
-      RedirectUrls redirectUrls = new RedirectUrls();
-      redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal/java?cancel=true");
-      redirectUrls.setReturnUrl("https://devtools-paypal.com/guide/pay_paypal/java?success=true");
-      return redirectUrls;
-    };
+    private APIContext setAPIContext(String accessToken) {
+      APIContext apiContext = new APIContext(accessToken);
+      apiContext.setConfigurationMap(this.sdkConfig);
 
-    private Payment setPayment(Payer payer, List<Transaction> transactions) {
-      Payment payment = new Payment();
-      payment.setIntent("sale");
-      payment.setPayer(payer);
-      payment.setTransactions(transactions);
-
-      return payment;
-    };
-
-    private Transaction setTransaction() {
-      Transaction transaction = new Transaction();
-      transaction.setDescription("creating a payment");
-      transaction.setAmount(amount);
-      return transaction;
+      return apiContext;
     }
 
     private Amount setAmount(int totalAmount) {
@@ -119,7 +117,38 @@ public class PayPalService {
       return amount;
     }
 
-    private Payer setPayer() {
+    private List<Transaction> setTransactionsList(Amount amount) {
+      Transaction transaction = new Transaction();
+      transaction.setDescription("creating a payment");
+      transaction.setAmount(amount);
+      List<Transaction> transactions = new ArrayList<Transaction>();
+      transactions.add(transaction);
 
+      return transactions;
+    }
+
+    private Payer setPayer() {
+      Payer payer = new Payer();
+      payer.setPaymentMethod("paypal");
+
+      return payer;
+    }
+
+    private Payment setPayment(Payer payer, List<Transaction> transactions, RedirectUrls redirectUrls) {
+      Payment payment = new Payment();
+      payment.setIntent("sale");
+      payment.setPayer(payer);
+      payment.setTransactions(transactions);
+      payment.setRedirectUrls(redirectUrls);
+
+      return payment;
+    }
+
+    private RedirectUrls setRedirectUrls() {
+      RedirectUrls redirectUrls = new RedirectUrls();
+      redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal/java?cancel=true");
+      redirectUrls.setReturnUrl("https://devtools-paypal.com/guide/pay_paypal/java?success=true");
+
+      return redirectUrls;
     }
 }
