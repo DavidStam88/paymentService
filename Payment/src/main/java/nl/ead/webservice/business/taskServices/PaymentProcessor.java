@@ -35,6 +35,10 @@ public class PaymentProcessor implements IPaymentProcessor {
     return payment.getLinks().get(1).getHref();
   }
 
+  public int checkForTest (int x) {
+    return x + 3;
+  };
+
   public PayPalPayment confirmPayment(String paymentId) {
     PayPalPayment ppp = this.paypalPaymentDao.update(paymentId);
     return ppp;
