@@ -6,6 +6,10 @@ import nl.ead.webservice.business.entityServices.PayPalPayment;
 import nl.ead.webservice.business.entityServices.IPaymentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * @author David Stam & Maikel Hennekes
+ */
+
 // PayPal libraries
 import com.paypal.api.payments.*;
 

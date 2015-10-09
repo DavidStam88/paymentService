@@ -2,6 +2,10 @@ package nl.ead.webservice.business.entityServices;
 
 import javax.persistence.*;
 
+/**
+ * @author David Stam & Maikel Hennekes
+ */
+
 @Entity
 public class PayPalPayment {
     @Id
