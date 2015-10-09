@@ -4,6 +4,7 @@ import nl.ead.webservice.application.PayPalPaymentDao;
 import nl.ead.webservice.application.IPayPalPaymentDao;
 import nl.ead.webservice.application.PayPalService;
 import nl.ead.webservice.business.entityServices.PayPalPayment;
+import nl.ead.webservice.business.entityServices.IPaymentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 // PayPal libraries
@@ -23,11 +24,14 @@ public class PaymentProcessor implements IPaymentProcessor {
 
   public String sendPayment(int userId, int amount) {
     Payment payment = this.paypalService.getPayPalPayment(amount);
-    PayPalPayment ppp = new PayPalPayment();
-    ppp.setUserId(userId);
-    ppp.setAmount(amount);
-    ppp.setPaymentConfirmed(false);
-    ppp.setPaypalId(payment.getId());
+    //PayPalPayment ppp = new PayPalPayment();
+    boolean paymentConfirmed = false;
+    String paypalId = payment.getId();
+    PayPalPayment ppp = paymentFactory.createPayPalPayment(userId, amount, paymentConfirmed, paypalId);
+    //ppp.setUserId(userId);
+    //ppp.setAmount(amount);
+    //ppp.setPaymentConfirmed(false);
+    //ppp.setPaypalId(payment.getId());
     this.paypalPaymentDao.save(ppp);
 
     return payment.getLinks().get(1).getHref();

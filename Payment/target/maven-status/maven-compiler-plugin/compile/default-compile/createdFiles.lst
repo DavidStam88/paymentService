@@ -7,15 +7,13 @@ nl\ead\webservice\SendPaymentResponse.class
 nl\ead\webservice\CancelPaymentRequest.class
 nl\ead\webservice\CancelPaymentResponse.class
 nl\ead\webservice\package-info.class
-nl\ead\webservice\application\PayPalService.class
 nl\ead\webservice\business\taskServices\IPaymentProcessor.class
 nl\ead\webservice\business\taskServices\PaymentProcessor.class
 nl\ead\webservice\ConfirmPaymentRequest.class
 nl\ead\webservice\ConfirmPaymentInput.class
 nl\ead\webservice\ConfirmPaymentResponse.class
 nl\ead\webservice\SendPaymentInput.class
-nl\ead\webservice\ObjectFactory.class
+nl\ead\webservice\business\entityServices\IPaymentFactory.class
 nl\ead\webservice\ConfirmPaymentOutput.class
 nl\ead\webservice\SendPaymentOutput.class
 nl\ead\webservice\business\entityServices\PayPalPayment.class
-nl\ead\webservice\application\PayPalPaymentDao.class

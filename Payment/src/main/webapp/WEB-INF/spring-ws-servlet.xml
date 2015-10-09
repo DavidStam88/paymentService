@@ -46,6 +46,7 @@
 
     <bean id="paymentProcessor" class="nl.ead.webservice.business.taskServices.PaymentProcessor"></bean>
     <bean id="paypalService" class="nl.ead.webservice.application.PayPalService"></bean>
+    <bean id="paymentFactory" class="nl.ead.webservice.business.entityServices.PaymentFactory"></bean>
 
     <!-- Small example of how to use a factory bean in Spring. Not really necessary for this case. -->
     <!--<bean id="paymentProcessor" factory-bean="paymentProcessorFactory" factory-method="create"/>
