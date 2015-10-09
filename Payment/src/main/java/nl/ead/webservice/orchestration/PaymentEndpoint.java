@@ -18,8 +18,8 @@ public class PaymentEndpoint {
     private final IPaymentProcessor paymentProcessor;
 
     @Autowired
-    public PaymentEndpoint(IPayPalPaymentDao paypalPaymentDao) {
-        this.paymentProcessor = new PaymentProcessor(paypalPaymentDao);
+    public PaymentEndpoint(IPaymentProcessor paymentProcessor) {
+        this.paymentProcessor = paymentProcessor;
     }
 
     @PayloadRoot(localPart = "SendPaymentRequest", namespace = "http://www.han.nl/schemas/messages")

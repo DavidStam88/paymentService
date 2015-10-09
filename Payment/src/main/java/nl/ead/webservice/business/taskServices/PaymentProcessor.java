@@ -12,11 +12,13 @@ import com.paypal.api.payments.*;
 public class PaymentProcessor implements IPaymentProcessor {
   private final IPayPalPaymentDao paypalPaymentDao;
   private final PayPalService paypalService;
+  private final IPaymentFactory paymentFactory;
 
   @Autowired
-  public PaymentProcessor(IPayPalPaymentDao paypalPaymentDao) {
+  public PaymentProcessor(IPayPalPaymentDao paypalPaymentDao, PayPalService paypalService, IPaymentFactory paymentFactory) {
     this.paypalPaymentDao = paypalPaymentDao;
-    this.paypalService = new PayPalService();
+    this.paypalService = paypalService;
+    this.paymentFactory = paymentFactory;
   }
 
   public String sendPayment(int userId, int amount) {

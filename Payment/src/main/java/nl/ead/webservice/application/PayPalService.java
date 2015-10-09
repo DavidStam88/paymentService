@@ -9,11 +9,17 @@ import com.paypal.base.rest.*;
 public class PayPalService {
   private final String client_secret = "";
   private final String client_id = "";
+  private Map<String, String> sdkConfig;
+
+  public PayPalService () {
+    this.sdkConfig = new HashMap<String, String>();
+    this.sdkConfig.put("mode", "sandbox");
+  };
 
     private String getAccessToken() {
       // Instantiate PayPal credentials
-      Map<String, String> sdkConfig = new HashMap<String, String>();
-      sdkConfig.put("mode", "sandbox");
+      //Map<String, String> sdkConfig = new HashMap<String, String>();
+      this.sdkConfig.put("mode", "sandbox");
 
       // Get access_token from PayPal
       String accessToken = null;
@@ -33,8 +39,7 @@ public class PayPalService {
 
     public Payment getPayPalPayment(int totalAmount) {
       // Instantiate PayPal credentials
-      Map<String, String> sdkConfig = new HashMap<String, String>();
-      sdkConfig.put("mode", "sandbox");
+      this.sdkConfig.put("mode", "sandbox");
 
       String accessToken = this.getAccessToken();
       // Make payment request to PayPal with given credentials
@@ -81,5 +86,40 @@ public class PayPalService {
       System.out.println(createdPayment);
 
       return createdPayment;
+    }
+
+    private RedirectUrls setRedirectURLs() {
+      RedirectUrls redirectUrls = new RedirectUrls();
+      redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal/java?cancel=true");
+      redirectUrls.setReturnUrl("https://devtools-paypal.com/guide/pay_paypal/java?success=true");
+      return redirectUrls;
+    };
+
+    private Payment setPayment(Payer payer, List<Transaction> transactions) {
+      Payment payment = new Payment();
+      payment.setIntent("sale");
+      payment.setPayer(payer);
+      payment.setTransactions(transactions);
+
+      return payment;
+    };
+
+    private Transaction setTransaction() {
+      Transaction transaction = new Transaction();
+      transaction.setDescription("creating a payment");
+      transaction.setAmount(amount);
+      return transaction;
+    }
+
+    private Amount setAmount(int totalAmount) {
+      Amount amount = new Amount();
+      amount.setCurrency("USD");
+      amount.setTotal(totalAmount + "");
+
+      return amount;
+    }
+
+    private Payer setPayer() {
+
     }
 }
