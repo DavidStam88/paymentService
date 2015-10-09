@@ -6,9 +6,9 @@ import java.util.*;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.*;
 
-public class PayPalService {
-  private final String client_secret = "";
-  private final String client_id = "";
+public class PayPalService implements IPayPalService {
+  private final String client_secret = "EF_MBpSMNE-O9YUnlTRTj7am-N66DyUhACLPpbXLu4mE9RqktfdJbRkvoG3rrzR4VkjTvqepNAK4gnDt";
+  private final String client_id = "AaRCve_7U61qh8t0QnbTmxpqC8SdDIlasPpt1SbA2oxTmZ9xGTn7jcuLwrp9mmJFMghWyrXQt8j-96h6";
   private Map<String, String> sdkConfig;
 
   public PayPalService () {
@@ -17,11 +17,6 @@ public class PayPalService {
   };
 
     private String getAccessToken() {
-      // Instantiate PayPal credentials
-      //Map<String, String> sdkConfig = new HashMap<String, String>();
-      //this.sdkConfig.put("mode", "sandbox");
-
-      // Get access_token from PayPal
       String accessToken = null;
 
       try {
@@ -37,52 +32,19 @@ public class PayPalService {
       return accessToken;
     }
 
-    public PayPalPayment getPayPalPayment(String paypalPaymentId) {
-      PayPalPayment ppp = new PayPalPayment();
-
+    public Payment getPayPalPayment(String paypalPaymentId) {
+      Payment ppp = new Payment();
       return ppp;
     }
 
-    public Payment getPayPalPayment(int totalAmount) {
-      // Instantiate PayPal credentials
-      this.sdkConfig.put("mode", "sandbox");
-
+    public Payment sendPayPalPayment(int totalAmount) {
       String accessToken = this.getAccessToken();
-      // Make payment request to PayPal with given credentials
       APIContext apiContext = this.setAPIContext(accessToken);
-      //APIContext apiContext = new APIContext(accessToken);
-      //apiContext.setConfigurationMap(this.sdkConfig);
-
       Amount amount = this.setAmount(totalAmount);
-      //Amount amount = new Amount();
-      //amount.setCurrency("USD");
-      //amount.setTotal(totalAmount + "");
-
       List<Transaction> transactions = this.setTransactionsList(amount);
-      //Transaction transaction = new Transaction();
-      //transaction.setDescription("creating a payment");
-      //transaction.setAmount(amount);
-
-      //List<Transaction> transactions = new ArrayList<Transaction>();
-      //transactions.add(transaction);
-
       Payer payer = this.setPayer();
-      //Payer payer = new Payer();
-      //payer.setPaymentMethod("paypal");
-
       RedirectUrls redirectUrls = this.setRedirectUrls();
-      //RedirectUrls redirectUrls = new RedirectUrls();
-      //redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal/java?cancel=true");
-      //redirectUrls.setReturnUrl("https://devtools-paypal.com/guide/pay_paypal/java?success=true");
-
       Payment payment = this.setPayment(payer, transactions, redirectUrls);
-
-      //Payment payment = new Payment();
-      //payment.setIntent("sale");
-      //payment.setPayer(payer);
-      //payment.setTransactions(transactions);
-      //payment.setRedirectUrls(redirectUrls);
-
       Payment createdPayment = null;
 
       try {
