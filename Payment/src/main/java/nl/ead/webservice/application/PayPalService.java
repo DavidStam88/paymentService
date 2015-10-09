@@ -10,7 +10,7 @@ import com.paypal.base.rest.*;
  * @author David Stam & Maikel Hennekes
  */
 
-public class PayPalService {
+public class PayPalService implements IPayPalService {
   private final String client_secret = "";
   private final String client_id = "";
   private Map<String, String> sdkConfig;
