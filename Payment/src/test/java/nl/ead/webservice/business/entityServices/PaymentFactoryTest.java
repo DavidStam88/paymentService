@@ -21,10 +21,11 @@ public class PaymentFactoryTest {
     @Test
     public void testPaymentFactory() throws Exception {
 //        assertEquals(PayPalPayment, paymentFactory.createPayPalPayment(1, 50, false, "paypalId"));
-        assertEquals(1, paymentFactory.createPayPalPayment(1, 50, false, "paypalId").getUserId());
-        assertEquals(50, paymentFactory.createPayPalPayment(1, 50, false, "paypalId").getAmount());
-        assertEquals(false, paymentFactory.createPayPalPayment(1, 50, false, "paypalId").getPaymentConfirmed());
-        assertEquals("paypalId", paymentFactory.createPayPalPayment(1, 50, false, "paypalId").getPaypalId());
+        assertEquals(1, paymentFactory.createPayPalPayment(1, "50", "USD", false, "paypalId").getUserId());
+        assertEquals("50", paymentFactory.createPayPalPayment(1, "50", "USD", false, "paypalId").getAmount());
+        assertEquals(false, paymentFactory.createPayPalPayment(1, "50", "USD", false, "paypalId").getPaymentConfirmed());
+        assertEquals("paypalId", paymentFactory.createPayPalPayment(1, "50", "USD", false, "paypalId").getPaypalId());
+        assertEquals("USD", paymentFactory.createPayPalPayment(1, "50", "USD", false, "paypalId").getCurrency());
 //      assertThat(paymentFactory.createPayPalPayment(1, 50, false, "paypalId"), isInstanceOf(PayPalPayment.class));
 
         assertEquals(1, 1);
