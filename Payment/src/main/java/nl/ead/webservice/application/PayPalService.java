@@ -14,8 +14,8 @@ import com.paypal.base.rest.*;
 public class PayPalService implements IPayPalService {
   // Het nodige client_id en de secret voor het verkrijgen van een access token voor de PayPal API.
   // Normaal gesproken zou je deze uit een extern bestand of databse willen halen.
-  private final String client_secret = "EF_MBpSMNE-O9YUnlTRTj7am-N66DyUhACLPpbXLu4mE9RqktfdJbRkvoG3rrzR4VkjTvqepNAK4gnDt";
-  private final String client_id = "AaRCve_7U61qh8t0QnbTmxpqC8SdDIlasPpt1SbA2oxTmZ9xGTn7jcuLwrp9mmJFMghWyrXQt8j-96h6";
+  private final String client_secret = "";
+  private final String client_id = "";
   private Map<String, String> sdkConfig;
 
   public PayPalService () {
