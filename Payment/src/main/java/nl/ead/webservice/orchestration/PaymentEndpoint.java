@@ -31,7 +31,7 @@ public class PaymentEndpoint {
     public SendPaymentResponse sendPayment(@RequestPayload SendPaymentRequest req) {
         int userId = req.getInput().getUserId();
         String amount = req.getInput().getAmount();
-        String currency = req.getInput().getCurrency();
+        String currency = req.getInput().getCurrency().toString();
         String redirectURL = this.paymentProcessor.sendPayment(userId, amount, currency);
 
         SendPaymentOutput sendPaymentOutput = new SendPaymentOutput();
@@ -51,6 +51,9 @@ public class PaymentEndpoint {
 
         ConfirmPaymentOutput cpo = new ConfirmPaymentOutput();
         cpo.setConfirmed(ppp.getPaymentConfirmed());
+        cpo.setPaypalId(ppp.getPaypalId());
+        cpo.setAmount(ppp.getAmount());
+        cpo.setCurrency(ppp.getCurrency());
         ConfirmPaymentResponse resp = new ConfirmPaymentResponse();
         resp.setOutput(cpo);
 
@@ -61,10 +64,10 @@ public class PaymentEndpoint {
     @ResponsePayload
     public CancelPaymentResponse cancelPayment(@RequestPayload CancelPaymentRequest req) {
       String paymentId = req.getInput().getPaymentId();
-      this.paymentProcessor.cancelPayment(paymentId);
+      String cancelPayment = this.paymentProcessor.cancelPayment(paymentId);
 
       CancelPaymentOutput cpo = new CancelPaymentOutput();
-      cpo.setCanceled(true);
+      cpo.setCanceled(cancelPayment);
       CancelPaymentResponse resp = new CancelPaymentResponse();
       resp.setOutput(cpo);
 

@@ -43,13 +43,19 @@ public class PaymentProcessor implements IPaymentProcessor {
     Payment payment = this.paypalService.getPayPalPayment(paymentId, payerId);
     PayPalPayment ppp = this.paypalPaymentDao.find(paymentId);
 
-    if (payment.getState() == "approved") {
+    if (payment.getState().toString().equals("approved")) {
       ppp = this.paypalPaymentDao.update(paymentId);
     }
     return ppp;
   }
 
-  public void cancelPayment(String paymentId) {
-    this.paypalPaymentDao.remove(paymentId);
+  public String cancelPayment(String paymentId) {
+    PayPalPayment ppp = this.paypalPaymentDao.find(paymentId);
+    if (!ppp.getPaymentConfirmed()) {
+      this.paypalPaymentDao.remove(paymentId);
+      return "Payment cancelled!";
+    } else {
+      return "Can't cancel payment because it's already confirmed!";
+    }
   }
 }

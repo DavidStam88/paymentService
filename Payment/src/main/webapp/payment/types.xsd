@@ -14,12 +14,15 @@
         <all>
 			<element name="userId" type="int" minOccurs="1" maxOccurs="1"/>
 			<element name="amount" type="string" minOccurs="1" maxOccurs="1"/>
-			<element name="currency" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="currency" type="tns:Currencies" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
 
     <complexType name="ConfirmPaymentOutput">
         <all>
+            <element name="paypalId" type="string"/>
+            <element name="currency" type="string"/>
+            <element name="amount" type="string"/>
             <element name="confirmed" type="boolean"/>
         </all>
     </complexType>
@@ -33,7 +36,7 @@
 
     <complexType name="CancelPaymentOutput">
         <all>
-            <element name="canceled" type="boolean"/>
+            <element name="canceled" type="string"/>
         </all>
     </complexType>
 
@@ -42,4 +45,11 @@
       <element name="paymentId" type="string" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
+
+    <simpleType name="Currencies">
+        <restriction base="NCName">
+            <enumeration value="USD"/>
+            <enumeration value="EUR"/>
+        </restriction>
+    </simpleType>
 </schema>
