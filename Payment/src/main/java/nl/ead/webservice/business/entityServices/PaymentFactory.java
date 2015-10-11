@@ -6,7 +6,7 @@ package nl.ead.webservice.business.entityServices;
 
 public class PaymentFactory implements IPaymentFactory {
 
-    private PaymentFactory(){
+    public PaymentFactory(){
     }
 
     public PayPalPayment createPayPalPayment(int userId, int amount, boolean paymentConfirmed, String paypalId) {
