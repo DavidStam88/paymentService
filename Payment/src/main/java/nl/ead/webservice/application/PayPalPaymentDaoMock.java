@@ -11,6 +11,11 @@ public class PayPalPaymentDaoMock implements IPayPalPaymentDao {
         System.out.println("Doe niets");
     }
 
+    public PayPalPayment find(String paypalId) {
+      PayPalPayment ppp = new PayPalPayment();
+      return ppp;
+    };
+
     public PayPalPayment update(String paypalId) {
       PayPalPayment ppp = new PayPalPayment();
       return ppp;

@@ -20,7 +20,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class PaymentEndpoint {
     private final IPaymentProcessor paymentProcessor;
-    
+
     @Autowired
     public PaymentEndpoint(IPaymentProcessor paymentProcessor) {
         this.paymentProcessor = paymentProcessor;
@@ -30,8 +30,9 @@ public class PaymentEndpoint {
     @ResponsePayload
     public SendPaymentResponse sendPayment(@RequestPayload SendPaymentRequest req) {
         int userId = req.getInput().getUserId();
-        int amount = req.getInput().getAmount();
-        String redirectURL = this.paymentProcessor.sendPayment(userId, amount);
+        String amount = req.getInput().getAmount();
+        String currency = req.getInput().getCurrency();
+        String redirectURL = this.paymentProcessor.sendPayment(userId, amount, currency);
 
         SendPaymentOutput sendPaymentOutput = new SendPaymentOutput();
         sendPaymentOutput.setRedirectURL(redirectURL);
@@ -45,7 +46,8 @@ public class PaymentEndpoint {
     @ResponsePayload
     public ConfirmPaymentResponse confirmPayment(@RequestPayload ConfirmPaymentRequest req) {
         String paymentId = req.getInput().getPaymentId();
-        PayPalPayment ppp = this.paymentProcessor.confirmPayment(paymentId);
+        String payerId = req.getInput().getPayerId();
+        PayPalPayment ppp = this.paymentProcessor.confirmPayment(paymentId, payerId);
 
         ConfirmPaymentOutput cpo = new ConfirmPaymentOutput();
         cpo.setConfirmed(ppp.getPaymentConfirmed());

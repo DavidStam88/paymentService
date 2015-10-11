@@ -23,6 +23,15 @@ public class PayPalPaymentDao implements IPayPalPaymentDao {
 
     @Transactional
     @Override
+    public PayPalPayment find(String paypalId) {
+      Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
+      long id = (long)q1.getSingleResult();
+      PayPalPayment ppp = em.find(PayPalPayment.class, id);
+      return ppp;
+    };
+
+    @Transactional
+    @Override
     public PayPalPayment update(String paypalId) {
       Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
       long id = (long)q1.getSingleResult();

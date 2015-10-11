@@ -12,7 +12,8 @@ public class PayPalPayment {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private int userId;
-    private int amount;
+    private String amount;
+    private String currency;
     private String paypalId;
     private boolean paymentConfirmed;
 
@@ -24,12 +25,20 @@ public class PayPalPayment {
         this.userId = userId;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency() {
+      return currency;
+    }
+
+    public void setCurrency(String currency) {
+      this.currency = currency;
     }
 
     public boolean getPaymentConfirmed() {

@@ -13,7 +13,8 @@
     <complexType name="SendPaymentInput">
         <all>
 			<element name="userId" type="int" minOccurs="1" maxOccurs="1"/>
-			<element name="amount" type="int" minOccurs="1" maxOccurs="1"/>
+			<element name="amount" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="currency" type="string" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
 
@@ -26,6 +27,7 @@
     <complexType name="ConfirmPaymentInput">
         <all>
       <element name="paymentId" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="payerId" type="string" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
 

@@ -25,11 +25,11 @@ public class PaymentProcessor implements IPaymentProcessor {
     this.paymentFactory = paymentFactory;
   }
 
-  public String sendPayment(int userId, int amount) {
-    Payment payment = this.paypalService.sendPayPalPayment(amount);
+  public String sendPayment(int userId, String amount, String currency) {
+    Payment payment = this.paypalService.sendPayPalPayment(amount, currency);
     boolean paymentConfirmed = false;
     String paypalId = payment.getId();
-    PayPalPayment ppp = paymentFactory.createPayPalPayment(userId, amount, paymentConfirmed, paypalId);
+    PayPalPayment ppp = paymentFactory.createPayPalPayment(userId, amount, currency, paymentConfirmed, paypalId);
     this.paypalPaymentDao.save(ppp);
 
     return payment.getLinks().get(1).getHref();
@@ -39,8 +39,13 @@ public class PaymentProcessor implements IPaymentProcessor {
     return x + 3;
   };
 
-  public PayPalPayment confirmPayment(String paymentId) {
-    PayPalPayment ppp = this.paypalPaymentDao.update(paymentId);
+  public PayPalPayment confirmPayment(String paymentId, String payerId) {
+    Payment payment = this.paypalService.getPayPalPayment(paymentId, payerId);
+    PayPalPayment ppp = this.paypalPaymentDao.find(paymentId);
+
+    if (payment.getState() == "approved") {
+      ppp = this.paypalPaymentDao.update(paymentId);
+    }
     return ppp;
   }
 

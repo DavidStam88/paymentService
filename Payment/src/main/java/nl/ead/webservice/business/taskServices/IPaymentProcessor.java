@@ -7,7 +7,7 @@ import nl.ead.webservice.business.entityServices.PayPalPayment;
  */
 
 public interface IPaymentProcessor {
-    String sendPayment(int userId, int amount);
-    PayPalPayment confirmPayment(String paymentId);
+    String sendPayment(int userId, String amount, String currency);
+    PayPalPayment confirmPayment(String paymentId, String payerId);
     void cancelPayment(String paymentId);
 }

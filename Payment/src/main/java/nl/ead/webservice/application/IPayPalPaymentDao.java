@@ -8,6 +8,7 @@ import nl.ead.webservice.business.entityServices.PayPalPayment;
 
 public interface IPayPalPaymentDao {
     void save(PayPalPayment paypalPayment);
+    PayPalPayment find(String paypalId);
     PayPalPayment update(String paypalId);
     void remove(String paypalId);
 }

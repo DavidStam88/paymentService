@@ -7,6 +7,6 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.*;
 
 public interface IPayPalService {
-    Payment sendPayPalPayment(int totalAmount);
-    Payment getPayPalPayment(String paypalPaymentId);
+    Payment sendPayPalPayment(String totalAmount, String currency);
+    Payment getPayPalPayment(String paypalPaymentId, String payerId);
 }

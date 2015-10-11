@@ -14,19 +14,16 @@ import static org.junit.Assert.*;
 public class PaymentProcessorTest {
 
     private PaymentProcessor paymentProcessor;
-    private Mockery context = new Mockery();
 
     @Before
     public void setUp() throws Exception {
-        final IPayPalService paypalService = context.mock(IPayPalService.class);
-        final IPaymentFactory paymentFactory = context.mock(IPaymentFactory.class);
         // moviePrinter is a mock, tempCalculationDao is a stub
-        paymentProcessor = new PaymentProcessor(new PayPalPaymentDaoMock(), paypalService, paymentFactory);
+        paymentProcessor = new PaymentProcessor(new PayPalPaymentDaoMock(), new PayPalServiceMock(), new PaymentFactory());
 
         // expectations
-        context.checking(new Expectations() {{
-            oneOf (paypalService).sendPayPalPayment(50);
-        }});
+        //context.checking(new Expectations() {{
+            //oneOf (paypalService).sendPayPalPayment(50);
+        //}});
     }
 
     @Test
@@ -36,6 +33,6 @@ public class PaymentProcessorTest {
 
     @Test
     public void functionGivesRedirectString() throws Exception {
-      assertEquals(4, 4);
+      assertEquals("http://www.nu.nl", paymentProcessor.sendPayment(5, "12", "USD"));
     };
 }
