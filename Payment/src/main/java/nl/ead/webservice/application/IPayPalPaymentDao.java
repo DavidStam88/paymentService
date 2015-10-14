@@ -3,12 +3,12 @@ package nl.ead.webservice.application;
 import nl.ead.webservice.business.entityServices.PayPalPayment;
 
 /**
- * @author David Stam & Maikel Hennekes
- */
+* @author David Stam & Maikel Hennekes
+*/
 
 public interface IPayPalPaymentDao {
-    void save(PayPalPayment paypalPayment);
-    PayPalPayment find(String paypalId);
-    PayPalPayment update(String paypalId);
-    void remove(String paypalId);
+  void save(PayPalPayment paypalPayment);
+  PayPalPayment find(String paypalId);
+  PayPalPayment update(String paypalId);
+  void remove(String paypalId);
 }

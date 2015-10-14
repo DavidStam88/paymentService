@@ -8,6 +8,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 import static org.junit.Assert.*;
 
@@ -17,13 +18,7 @@ public class PaymentProcessorTest {
 
     @Before
     public void setUp() throws Exception {
-        // moviePrinter is a mock, tempCalculationDao is a stub
         paymentProcessor = new PaymentProcessor(new PayPalPaymentDaoMock(), new PayPalServiceMock(), new PaymentFactory());
-
-        // expectations
-        //context.checking(new Expectations() {{
-            //oneOf (paypalService).sendPayPalPayment(50);
-        //}});
     }
 
     @Test
@@ -34,5 +29,11 @@ public class PaymentProcessorTest {
     @Test
     public void functionGivesRedirectString() throws Exception {
       assertEquals("http://www.nu.nl", paymentProcessor.sendPayment(5, "12", "USD"));
+    };
+
+    @Test
+    public void functionGivesComfirmedPayment() throws Exception {
+      assertThat(paymentProcessor.confirmPayment("5", "payerId"), instanceOf(PayPalPayment.class));
+      assertEquals(true, paymentProcessor.confirmPayment("5", "payerId").getPaymentConfirmed());
     };
 }

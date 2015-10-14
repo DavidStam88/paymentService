@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class PaymentFactoryTest {
     private IPaymentFactory paymentFactory;
-    private Mockery context = new Mockery();
 
     @Before
     public void setUp() throws Exception {

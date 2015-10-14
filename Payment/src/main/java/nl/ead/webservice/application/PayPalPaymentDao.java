@@ -6,46 +6,46 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author David Stam & Maikel Hennekes
- */
+* @author David Stam & Maikel Hennekes
+*/
 
 @Repository
 public class PayPalPaymentDao implements IPayPalPaymentDao {
 
-    @PersistenceContext
-    private EntityManager em;
+  @PersistenceContext
+  private EntityManager em;
 
-    @Transactional
-    @Override
-    public void save(PayPalPayment paypalPayment) {
-        em.persist(paypalPayment);
-    }
+  @Transactional
+  @Override
+  public void save(PayPalPayment paypalPayment) {
+    em.persist(paypalPayment);
+  }
 
-    @Transactional
-    @Override
-    public PayPalPayment find(String paypalId) {
-      Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
-      long id = (long)q1.getSingleResult();
-      PayPalPayment ppp = em.find(PayPalPayment.class, id);
-      return ppp;
-    };
+  @Transactional
+  @Override
+  public PayPalPayment find(String paypalId) {
+    Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
+    long id = (long)q1.getSingleResult();
+    PayPalPayment ppp = em.find(PayPalPayment.class, id);
+    return ppp;
+  };
 
-    @Transactional
-    @Override
-    public PayPalPayment update(String paypalId) {
-      Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
-      long id = (long)q1.getSingleResult();
-      PayPalPayment ppp = em.find(PayPalPayment.class, id);
-      ppp.setPaymentConfirmed(true);
-      return ppp;
-    };
+  @Transactional
+  @Override
+  public PayPalPayment update(String paypalId) {
+    Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
+    long id = (long)q1.getSingleResult();
+    PayPalPayment ppp = em.find(PayPalPayment.class, id);
+    ppp.setPaymentConfirmed(true);
+    return ppp;
+  };
 
-    @Transactional
-    @Override
-    public void remove(String paypalId) {
-      Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
-      long id = (long)q1.getSingleResult();
-      PayPalPayment ppp = em.find(PayPalPayment.class, id);
-      em.remove(ppp);
-    };
+  @Transactional
+  @Override
+  public void remove(String paypalId) {
+    Query q1 = em.createQuery("SELECT id FROM PayPalPayment where paypalId = '" + paypalId + "'");
+    long id = (long)q1.getSingleResult();
+    PayPalPayment ppp = em.find(PayPalPayment.class, id);
+    em.remove(ppp);
+  };
 }
